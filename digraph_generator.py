@@ -38,8 +38,6 @@ class VersatileDigraph:
             raise TypeError("Edge names must be entered as a string.")
         if vararg.get('weight', 0) >= 0:
             self.__edge_weights[tail][head] = vararg.get('weight',0)
-        if vararg.get('weight', 0) >= 0:
-            self.__edge_weights[head][tail] = vararg.get('weight',0)
             
     def add_node(self, node_id, node_value=0):
         '''Add node'''
