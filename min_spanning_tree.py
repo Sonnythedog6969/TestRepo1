@@ -20,6 +20,28 @@ class SpanningTreeGraph(TraversableDigraph):
         self.__edge_head = {}
         super().__init__()
         
+    def add_edge(self,tail, head, **vararg):
+        '''Adds an edge to the graph'''
+        if isinstance(tail, str) is not True:
+            raise TypeError("Nodes must be entered as a string.")
+        if isinstance(head, str) is not True:
+            raise TypeError("Nodes must be entered as a string.")
+        if not tail in self.get_nodes():
+            self.add_node(tail,vararg.get("start_node_value",0))
+        if not head in self.get_nodes():
+            self.add_node(head,vararg.get("end_node_value",0))
+        edge_name = vararg.get("name",tail + " to " + head)
+        self.__edge_names[tail][head] = edge_name
+        if isinstance(edge_name, str) is not True:
+            raise TypeError("Edge names must be entered as a string.")
+        self.__edge_head[tail][edge_name] = head
+        if isinstance(head, str) is not True:
+            raise TypeError("Edge names must be entered as a string.")
+        if vararg.get('weight', 0) >= 0:
+            self.__edge_weights[tail][head] = vararg.get('weight',0)
+        if vararg.get('weight', 0) >= 0:
+            self.__edge_weights[head][tail] = vararg.get('weight',0)
+        
     def spanning_tree(self, start):
         '''Minimal spanning tree'''
         parents = {}
